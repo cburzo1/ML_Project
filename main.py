@@ -1,6 +1,7 @@
 import random
 import csv
-import sys
+
+csv.field_size_limit(100000000)
 
 arr = {"User ID":[], "Game ID":[], "Review Score": []}
 
@@ -22,10 +23,25 @@ for i in range(1, 523):
     if arr.get("Review Score")[i] == 0:
         arr.get("Review Score")[i] = float("NaN")
 
-with open('game_info.csv', newline='') as csvfile:
-    spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+temp_game_arr = []
+
+with open('game_info.csv',encoding="utf-8") as csvfile:
+    spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
     for i in spamreader:
-        print(i)
+        temp_game_arr.append(i)
+
+#print(temp_game_arr[6][0])
+
+rand_list = random.sample(range(1, len(temp_game_arr)), 273002)
+
+for i in range(1, len(temp_game_arr)):
+    #print(i)
+    for j in rand_list:
+        if i == j:
+            temp_game_arr.pop(i)
+
+for i in range(1, len(temp_game_arr)):
+    print(i)
 
 '''print(arr.get("User ID"))
 print(arr.get("Game ID"))
